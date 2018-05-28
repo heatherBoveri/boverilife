@@ -1,0 +1,72 @@
+%h1
+  = @trip.name
+  %span.badge{class: 'badge-primary'}= "#{@trip.length} Days"
+  %span.badge{class: 'badge-dark'}= @trip.year
+  - @trip.tags.each do |tag|
+    %span.badge{class: 'badge-secondary'}= tag.value
+  .float-right
+    = link_to 'Edit', edit_trip_path(@trip), class: 'btn btn-primary btn-lg'
+    = link_to 'Destroy', @trip, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-lg'
+
+.row
+  %table.table
+    %thead
+      %tr
+        %th Heather Rating
+        %th Matt Rating
+        %th Total Flight Cost
+        %th Cost to Stay
+        %th Total Cost
+        %th Cost per day
+        %th Land Travel
+        %th Total Travel
+        %th Links
+    %tbody
+      %tr
+        %td
+          %span.badge{class: @trip.badge_color(@trip.heather_rating)}= @trip.heather_rating
+        %td
+          %span.badge{class: @trip.badge_color(@trip.matt_rating)}= @trip.matt_rating
+        %td= currency(@trip.total_flight_cost)
+        %td= currency(@trip.cost_to_stay)
+        %td= currency(@trip.total_cost)
+        %td= currency(@trip.cost_per_day)
+        %td= "#{@trip.travel_hours} hour(s)"
+        %td= "#{@trip.total_hours} hour(s)"
+        %td
+          = link_to 'Rome2Rio', "https://www.rome2rio.com/s/Kansas-City/#{@trip.cities.join('/').gsub(' ', '-')}/Kansas-City/"
+
+- if @todos.any?
+  .row
+    %h2 Things to See
+    %table.table
+      %tbody
+        %tr
+        %td.col-md-2.text-center
+          %h5
+            - @todos.each do |todo|
+              %span{'data-toggle' => 'tooltip', title: todo.value}
+                %span.badge{class: 'badge-info'}= todo.key
+.row
+  - @trip.images.each do |location, image|
+    %div{class: image_row_size(@trip.images.size)}
+      .img-container
+        = link_to image_tag(image.src, width: '100%', height: 200), image.link
+        .centered-img-text= location.name
+      .row.text-center
+        .col-4
+          %h5.div{class: 'badge-success', style: 'padding: 10px 0'}= "#{location.days} days"
+        .col-4
+          %h5.div{class: 'badge-success', style: 'padding: 10px 0'}= "$#{location.cost}/day"
+        .col-4
+          %h5.div{class: 'badge-success', style: 'padding: 10px 0'}= "$#{location.total_cost} total"
+      %p= location.summary
+      - [*location.wiki].each do |wiki_chunk|
+        %p= wiki_chunk
+      - location.facts.each do |fact|
+        %h4= fact.key
+        - [*fact.value].each do |value_chunk|
+          %p= value_chunk
+      = link_to 'Jauntaroo', "http://www.jauntaroo.com/destinations/view/#{location.city.gsub(' ', '-')}/", class: 'btn btn-primary'
+      = link_to 'Travel and Leisure', "http://www.travelandleisure.com/travel-guide/#{location.city.titlecase.gsub(' ', '-')}", class: 'btn btn-primary'
+

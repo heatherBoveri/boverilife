@@ -1,0 +1,70 @@
+= form_for @trip, html: {class: 'form'} do |f|
+  - if @trip.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@trip.errors.count, "error")} prohibited this trip from being saved:"
+      %ul
+        - @trip.errors.full_messages.each do |msg|
+          %li= msg
+  .form-group
+    .row
+      .col-1
+        .field
+          = f.select :year, options_for_select(2018..2068, f.object.year), {prompt: 'year', include_blank: true}, class: 'form-control'
+      .col-2
+        .field
+          = f.select :matt_rating, options_for_select(1..10, f.object.matt_rating), {prompt: "Matt's rating"}, class: 'form-control'
+      .col-2
+        .field
+          = f.select :heather_rating, options_for_select(1..10, f.object.heather_rating), {prompt: "Heather's rating"}, class: 'form-control'
+      .col-2
+        .field
+          .input-group
+            = f.check_box :ignore_in_lifetime, { class: 'form-check-input' }
+            = f.label :ignore_in_lifetime
+      .col-2
+        = f.check_box :ignore_destination_flight, { class: 'form-check-input' }
+        = f.label :ignore_destination_flight
+      .col-2
+        = f.check_box :ignore_return_flight, { class: 'form-check-input' }
+        = f.label :ignore_return_flight
+  .form-group
+    = f.label :airports
+    .row
+      .col-3
+        = f.select :destination_airport, options_for_select(@airports, f.object.destination_airport), {include_blank: true, prompt: 'select destination airport'}, {class: 'form-control  input-sm'}
+      .col-3
+        = f.select :return_airport, options_for_select(@airports, f.object.destination_airport), {include_blank: true, prompt: 'select return airport'}, {class: 'form-control  input-sm'}
+  .form-group
+    = f.label :flight_cost
+    .row
+      .field.col-6
+        .input-group
+          %span.input-group-addon#min-flight-cost $
+          = f.text_field :min_flight_cost, required: true, class: 'form-control input-sm', 'aria-describedby' => 'min-flight-cost'
+          %span.input-group-addon#min-flight-cost minimum flight cost
+      .field.col-6
+        .input-group.inline-fields
+          %span.input-group-addon#max-flight-cost $
+          = f.text_field :max_flight_cost, required: true, class: 'form-control input-sm', 'aria-describedby' => 'max-flight-cost'
+          %span.input-group-addon#max-flight-cost maximum flight cost
+  .form-group
+    .field
+      = f.label :total_hours
+      = f.number_field :total_hours, class: 'form-control'
+  .form-group
+    .field
+      = f.label :travel_hours
+      = f.number_field :travel_hours, class: 'form-control'
+  %h3 Locations
+  #locations
+    = f.fields_for :locations do |location|
+      = render 'location_fields', f: location
+  %p= link_to_add_association 'Add', f, :locations, class: 'btn btn-success'
+
+  %h3 Tags
+  #tags
+    = f.fields_for :tags do |tag|
+      = render 'tag_fields', f: tag
+  %p= link_to_add_association 'Add', f, :tags, class: 'btn btn-success'
+
+  %a= f.submit 'Save', class: 'btn btn-primary float-right'

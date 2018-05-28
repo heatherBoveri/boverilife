@@ -1,0 +1,48 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ */
+
+ // Custom bootstrap variables must be set or imported *before* bootstrap.
+ @import "bootstrap";
+ @import "select2";
+ @import "bootstrap-table";
+ @import "select2-bootstrap";
+ @import "font-awesome-sprockets";
+ @import "font-awesome";
+
+ .inline-fields > .field, .inline-fields .input-group-addon, .inline-fields > .label {
+  display: inline-block;
+ }
+
+ .img-container {
+    background-color: black;
+    position: relative;
+    text-align: center;
+    color: white;
+    margin-bottom: 10px;
+ }
+
+ div.fixed-table-toolbar > div.columns.columns-right.btn-group.pull-right, div.pull-right.search {
+   display: inline-block;
+ }
+
+ .search {
+   width: 90%;
+ }
+
+ div > h1 > span.badge {
+  padding: 0.5rem 1rem;
+  font-size: 1.25rem;
+  line-height: 1.5;
+  font-weight: normal;
+ }

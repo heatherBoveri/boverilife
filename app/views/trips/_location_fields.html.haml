@@ -1,0 +1,23 @@
+.row.nested-fields.inline-fields
+  .field.col-1
+    .input-group
+      = f.number_field :order, value: location_order(f.object), class: 'form-control', placeholder: 'order'
+  .field.col-3
+    = f.select :country, options_for_select(@countries, f.object.country), {prompt: 'country'}, class: 'form-control country-select'
+  .field.col-1
+    = f.text_field :state, placeholder: 'state', class: 'form-control'
+  .field.col-2
+    = f.text_field :city, placeholder: 'city', required: true, class: 'form-control'
+  .field.col-2
+    .input-group
+      %span.inline-form.input-group-addon#cost $
+      = f.number_field :cost, class: 'form-control', 'aria-describedby' => 'days'
+      %span.inline-form.input-group-addon#cost per day
+  .field.col-2
+    .input-group
+      = f.number_field :days, placeholder: 'days', required: true, class: 'form-control input-sm', 'aria-describedby' => 'days'
+      %span.inline-form.input-group-addon#days days
+  .field
+    %p
+      = link_to_remove_association icon('remove'), f, class: 'btn btn-danger'
+  %br

@@ -1,0 +1,6 @@
+.row.nested-fields.inline-fields
+  .col-2.field
+    = f.select :value, options_for_select(Tag::NAMES, f.object.value), {prompt: 'tag'}, class: 'form-control'
+  .field
+    %p
+      = link_to_remove_association icon('remove'), f, class: 'btn btn-danger'

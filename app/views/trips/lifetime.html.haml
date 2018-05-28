@@ -1,0 +1,57 @@
+= line_chart [chart_data('Ratings', @ratings),
+              chart_data('Daily Cost', @daily),
+              chart_data('Cost', @cost),
+              chart_data('Hours', @hours),
+              chart_data('Flights', @flights)]
+
+%br
+%h1
+  Lifetime Trips
+  %span.badge{class: 'badge-primary'}= currency(@trips.sum(&:third))
+  %span.badge{class: 'badge-secondary'}= "#{@used_trips.count} trips"
+%table.table
+  %tbody
+    %tr
+      - Tag::NAMES_TO_ICONS.keys.each do |tag|
+        %td
+          = tag
+          = icon(Tag::NAMES_TO_ICONS[tag])
+
+.row
+  .col-12
+    %table.table#year-trips{'data-toggle' => 'table', 'data-search' => 'true', 'data-show-export' => 'true'}
+      %thead
+        %tr
+          %th{'data-sortable' => 'true', 'data-field' => 'year'} Year
+          %th{'data-sortable' => 'true', 'data-field' => 'age'} Age
+          %th{'data-sortable' => 'true', 'data-field' => 'kid_age'} Kid's Age
+          %th{'data-field' => 'year_trips'} Trips
+          %th{'data-sortable' => 'true', 'data-field' => 'vacation_days'} Vacation Days
+          %th{'data-sortable' => 'true', 'data-field' => 'cost', 'data-sorter' => 'priceSorter'} Cost
+          %th{'data-field' => 'todo'} Things to do
+
+      %tbody
+        - @trips.each do |year, year_trips, cost, vacation_days|
+          %tr
+            %td{'data-sortable' => 'true', 'data-field' => 'year'}= year
+            %td{'data-sortable' => 'true'}= year - 1991
+            %td{'data-sortable' => 'true'}= year > 2022 ? year - 2022 : nil
+            %td.col-md-5{'data-sortable' => 'true', 'data-field' => 'year_trips'}
+              - year_trips.each do |trip|
+                %p
+                  = link_to "#{trip.name} (#{trip.vacation_days})", edit_trip_path(trip), style: (trip.year ? '' : 'color: red')
+                  %span.badge{class: trip.badge_color(trip.rating)}
+                    = trip.rating
+                    = icon('thumbs-up')
+                  %span.badge{class: peace_color(trip.average_peace_index_score)}
+                    = trip.average_peace_index_score
+                    = icon('hand-peace-o')
+                  - trip.icons.each do |tag, icon|
+                    %span{'data-toggle' => 'tooltip', title: tag, href: '#'}
+                      = icon(icon)
+            %td.col-md-1{'data-sortable' => 'true', 'data-field' => 'vacation_days'}= vacation_days
+            %td.col-md-2{'data-sortable' => 'true', 'data-field' => 'total_cost'}= currency(cost)
+            %td.col-md-2
+              - year_trips.map(&:todos).flatten.each do |todo|
+                %a{'data-toggle' => 'tooltip', title: todo.value, href: '#'}
+                  %span.badge{class: 'badge-info'}= todo.key

@@ -1,0 +1,34 @@
+= geo_chart Tag.where(value: 'Retirement').map(&:trip).map(&:locations).flatten.map { |l| [l.country, 1] }
+%h1
+  Retirement
+  %span= link_to 'New Trip', new_trip_path, class: 'float-right btn btn-success'
+
+%table.table#trips{'data-toggle' => 'table', 'data-search' => 'true', 'data-id-field' => 'id', 'data-sort-name' => 'year'}
+  %thead
+    %tr
+      %th{'data-field' => 'year', 'data-sortable' => 'true'} Year
+      %th{'data-sortable' => 'true', 'data-field' => 'age'} Age
+      %th{'data-sortable' => 'true', 'data-field' => 'kid_age'} Kid's Age
+      %th{'data-field' => 'name', 'data-sortable' => 'true', 'data-sorter' => 'htmlSorter'} Name
+      %th{'data-field' => 'cost_to_stay', 'data-sortable' => 'true', 'data-sorter' => 'priceSorter'} Cost to Stay
+      %th{'data-field' => 'total_cost', 'data-sortable' => 'true', 'data-sorter' => 'priceSorter'} Total Cost
+      %th{'data-field' => 'total_flight_cost', 'data-sortable' => 'true', 'data-sorter' => 'priceSorter'} Flight Cost
+      %th{'data-field' => 'days', 'data-sortable' => 'true'} Days
+
+  %tbody
+    - @trips.each do |year, trips|
+      %tr
+        %td= year
+        %td= year - 1991 if year
+        %td= (year > 2021 ? year - 2021 : nil) if year
+        %td
+          - trips.each do |trip|
+            %p
+              = link_to trip.name, edit_trip_path(trip), style: (trip.year ? '' : 'color: red')
+              - trip.icons.each do |tag, icon|
+                %span{'data-toggle' => 'tooltip', title: tag, href: '#'}
+                  = icon(icon)
+        %td= currency(trips.sum(&:cost_to_stay))
+        %td= currency(trips.sum(&:total_cost))
+        %td= currency(trips.sum(&:total_flight_cost))
+        %td= trips.sum(&:length)

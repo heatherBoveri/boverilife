@@ -1,0 +1,98 @@
+%h1
+  %span= link_to 'New Trip', new_trip_path, class: 'float-right btn btn-success'
+
+.col-12
+  %h2 Costly Trips
+  %table.table#costly{'data-toggle' => 'table', 'data-search' =>'true' }
+    %thead
+      %tr
+        %th{'data-sortable' => 'true', 'data-field' => 'name', 'data-sorter' => 'htmlSorter'} Name
+        %th{'data-sortable' => 'true', 'data-field' => 'min_flight_cost', 'data-sorter' => 'priceSorter'} Min Flight Cost
+        %th{'data-sortable' => 'true', 'data-field' => 'max_flight_cost', 'data-sorter' => 'priceSorter'} Max Flight Cost
+        %th{'data-sortable' => 'true', 'data-field' => 'avg_flight_cost', 'data-sorter' => 'priceSorter'} Average Flight Cost
+        %th{'data-sortable' => 'true', 'data-field' => 'cost_to_stay', 'data-sorter' => 'priceSorter'} Cost to Stay
+        %th{'data-sortable' => 'true', 'data-field' => 'total_cost'} Total Cost
+        %th{'data-field' => 'retirement'} Retirement
+    %tbody
+      - @costly_trips.each do |trip|
+        %tr
+          %td{'data-sortable' => 'true', 'data-field' => 'name', 'data-sorter' => 'htmlSorter'}= link_to trip.name, trip
+          %td= currency(trip.min_flight_cost)
+          %td= currency(trip.avg_flight_cost)
+          %td= currency(trip.max_flight_cost)
+          %td= currency(trip.cost_to_stay)
+          %td= currency(trip.total_cost)
+          %td= trip.tags.map(&:value).include?('Retirement') ? 'x' : nil
+
+%br
+.col-12
+  %h2 Cheapest Flights
+  %table.table#cheap{'data-toggle' => 'table', 'data-search' =>'true'}
+    %thead
+      %tr
+        %th{'data-sortable' => 'true', 'data-field' => 'name', 'data-sorter' => 'htmlSorter'} Name
+        %th{'data-sortable' => 'true', 'data-field' => 'min_flight_cost', 'data-sorter' => 'priceSorter'} Min Flight Cost
+        %th{'data-sortable' => 'true', 'data-field' => 'max_flight_cost', 'data-sorter' => 'priceSorter'} Max Flight Cost
+        %th{'data-sortable' => 'true', 'data-field' => 'avg_flight_cost', 'data-sorter' => 'priceSorter'} Average Flight Cost
+        %th{'data-sortable' => 'true', 'data-field' => 'cost_to_stay', 'data-sorter' => 'priceSorter'} Cost to Stay
+        %th{'data-sortable' => 'true', 'data-field' => 'total_cost'} Total Cost
+        %th{'data-field' => 'kids'} Kids?
+    %tbody
+      - @cheapest_flights.each do |trip|
+        %tr
+          %td{'data-sortable' => 'true', 'data-field' => 'name', 'data-sorter' => 'htmlSorter'}= link_to trip.name, trip
+          %td= currency(trip.min_flight_cost)
+          %td= currency(trip.avg_flight_cost)
+          %td= currency(trip.max_flight_cost)
+          %td= currency(trip.cost_to_stay)
+          %td= currency(trip.total_cost)
+          %td= trip.tags.map(&:value).include?('Kid-Friendly') ? 'x' : nil
+
+%br
+.col-12
+  %h2 Longest Flights
+  %table.table#longest{'data-toggle' => 'table', 'data-search' =>'true'}
+    %thead
+      %tr
+        %th{'data-sortable' => 'true', 'data-field' => 'name', 'data-sorter' => 'htmlSorter'} Name
+        %th{'data-sortable' => 'true', 'data-field' => 'min_flight_cost', 'data-sorter' => 'priceSorter'} Min Flight Cost
+        %th{'data-sortable' => 'true', 'data-field' => 'max_flight_cost', 'data-sorter' => 'priceSorter'} Max Flight Cost
+        %th{'data-sortable' => 'true', 'data-field' => 'avg_flight_cost', 'data-sorter' => 'priceSorter'} Average Flight Cost
+        %th{'data-sortable' => 'true', 'data-field' => 'cost_to_stay', 'data-sorter' => 'priceSorter'} Cost to Stay
+        %th{'data-sortable' => 'true', 'data-field' => 'total_cost'} Total Cost
+        %th{'data-field' => 'kids'} Kids?
+    %tbody
+      - @longest_flights.each do |trip|
+        %tr
+          %td{'data-sortable' => 'true', 'data-field' => 'name', 'data-sorter' => 'htmlSorter'}= link_to trip.name, trip
+          %td= currency(trip.min_flight_cost)
+          %td= currency(trip.avg_flight_cost)
+          %td= currency(trip.max_flight_cost)
+          %td= currency(trip.cost_to_stay)
+          %td= currency(trip.total_cost)
+          %td= trip.tags.map(&:value).include?('Kid-Friendly') ? 'x' : nil
+%br
+.col-12
+  %h2 Cheapest to Stay
+  %table.table#longest{'data-toggle' => 'table', 'data-search' =>'true'}
+    %thead
+      %tr
+        %th{'data-sortable' => 'true', 'data-field' => 'name', 'data-sorter' => 'htmlSorter'} Name
+        %th{'data-sortable' => 'true', 'data-field' => 'min_flight_cost', 'data-sorter' => 'priceSorter'} Min Flight Cost
+        %th{'data-sortable' => 'true', 'data-field' => 'max_flight_cost', 'data-sorter' => 'priceSorter'} Max Flight Cost
+        %th{'data-sortable' => 'true', 'data-field' => 'avg_flight_cost', 'data-sorter' => 'priceSorter'} Average Flight Cost
+        %th{'data-sortable' => 'true', 'data-field' => 'cost_to_stay', 'data-sorter' => 'priceSorter'} Cost to Stay
+        %th{'data-sortable' => 'true', 'data-field' => 'total_cost'} Total Cost
+        %th{'data-sortable' => 'true', 'data-field' => 'average_peace_index_score'} Peace
+        %th{'data-field' => 'kids'} Kids?
+    %tbody
+      - @cheapest_to_stay.each do |trip|
+        %tr
+          %td{'data-sortable' => 'true', 'data-field' => 'name', 'data-sorter' => 'htmlSorter'}= link_to trip.name, trip
+          %td= currency(trip.min_flight_cost)
+          %td= currency(trip.avg_flight_cost)
+          %td= currency(trip.max_flight_cost)
+          %td= currency(trip.cost_to_stay)
+          %td= currency(trip.total_cost)
+          %td= trip.average_peace_index_score
+          %td= trip.tags.map(&:value).include?('Kid-Friendly') ? 'x' : nil

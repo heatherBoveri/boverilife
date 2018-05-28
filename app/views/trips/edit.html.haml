@@ -1,0 +1,7 @@
+%h1
+  Editing
+  =link_to "#{@trip.name}", trip_path(@trip)
+  .float-right
+    = link_to 'Destroy', @trip, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-lg'
+
+= render 'form'

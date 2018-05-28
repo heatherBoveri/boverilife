@@ -1,0 +1,58 @@
+%h1
+  Trips
+  %span.badge{class: 'badge-secondary'}= "#{@trips.count} trips"
+  %span.badge{class: 'badge-primary'}= currency(@trips.sum(&:total_cost))
+  %span= link_to 'New Trip', new_trip_path, class: 'float-right btn btn-success'
+
+%table.table#trips{'data-toggle' => 'table', 'data-search' =>'true', 'data-show-export' => 'true'}
+  %thead
+    %tr
+      %th{'data-sortable' => 'true', 'data-field' => 'location_1', 'data-sorter' => 'htmlSorter'} 1
+      %th{'data-sortable' => 'true', 'data-field' => 'days_1'} #
+      %th{'data-sortable' => 'true', 'data-field' => 'cost_1', 'data-sorter' => 'priceSorter'} $
+      %th{'data-sortable' => 'true', 'data-field' => 'location_2', 'data-sorter' => 'htmlSorter'} 2
+      %th{'data-sortable' => 'true', 'data-field' => 'days_2'} #
+      %th{'data-sortable' => 'true', 'data-field' => 'cost_2', 'data-sorter' => 'priceSorter'} $
+      %th{'data-sortable' => 'true', 'data-field' => 'location_3', 'data-sorter' => 'htmlSorter'} 3
+      %th{'data-sortable' => 'true', 'data-field' => 'days_3'} #
+      %th{'data-sortable' => 'true', 'data-field' => 'cost_3', 'data-sorter' => 'priceSorter'} $
+      %th{'data-sortable' => 'true', 'data-field' => 'location_4', 'data-sorter' => 'htmlSorter'} 4
+      %th{'data-sortable' => 'true', 'data-field' => 'days_4'} #
+      %th{'data-sortable' => 'true', 'data-field' => 'cost_4', 'data-sorter' => 'priceSorter'} $
+      %th{'data-sortable' => 'true', 'data-field' => 'total_hours'} Total
+      %th{'data-sortable' => 'true', 'data-field' => 'travel_hours'} Trvl
+      %th{'data-sortable' => 'true', 'data-field' => 'min_flight_cost'} Min
+      %th{'data-sortable' => 'true', 'data-field' => 'max_flight_cost'} Max
+      %th{'data-sortable' => 'true', 'data-field' => 'avg_flight_cost'} Avg
+      %th{'data-sortable' => 'true', 'data-field' => 'tags'} Tags
+      %th{'data-sortable' => 'true', 'data-field' => 'heather_rating', 'data-sorter' => 'htmlSorter'} Heather
+      %th{'data-sortable' => 'true', 'data-field' => 'matt_rating', 'data-sorter' => 'htmlSorter'} Matt
+      %th{'data-sortable' => 'true', 'data-field' => 'year'} Year
+      %th Edit
+
+  %tbody
+    - @trips.each do |trip|
+      - locations = trip.locations
+      %tr
+        %td= link_to locations[0].city, trip
+        %td= locations[0].days
+        %td= currency(locations[0].cost)
+        %td= link_to locations[1].city, trip if locations[1]
+        %td= locations[1].days if locations[1]
+        %td= currency(locations[1].cost) if locations[1]
+        %td= link_to locations[2].city, trip if locations[2]
+        %td= locations[2].days if locations[2]
+        %td= currency(locations[2].cost) if locations[2]
+        %td= link_to locations[3].city, trip if locations[3]
+        %td= locations[3].days if locations[3]
+        %td= currency(locations[3].cost) if locations[3]
+        %td= trip.total_hours
+        %td= trip.travel_hours
+        %td= currency(trip.min_flight_cost)
+        %td= currency(trip.max_flight_cost)
+        %td= currency(trip.avg_flight_cost)
+        %td= trip.tag_values.join(', ')
+        %td= trip.heather_rating
+        %td= trip.matt_rating
+        %td= trip.year
+        %td= link_to icon('edit'), edit_trip_path(trip), class: 'btn btn-primary float-right'

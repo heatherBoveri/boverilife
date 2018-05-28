@@ -1,0 +1,105 @@
+%h1
+  %span= link_to 'New Trip', new_trip_path, class: 'float-right btn btn-success'
+
+- if @not_rated.any?
+  %h2 Not Rated
+  %table.table#trips{'data-toggle' => 'table', 'data-search' =>'true'}
+    %thead
+      %tr
+        %th{'data-sortable' => 'true', 'data-field' => 'rating', 'data-sorter' => 'htmlSorter'} Rating
+        %th{'data-sortable' => 'true', 'data-field' => 'name', 'data-sorter' => 'htmlSorter'} Name
+        %th{'data-sortable' => 'true', 'data-field' => 'matt_rating', 'data-sorter' => 'htmlSorter'} Matt's Rating
+        %th{'data-sortable' => 'true', 'data-field' => 'heather_rating', 'data-sorter' => 'htmlSorter'} Heather's Rating
+        %th{'data-sortable' => 'true', 'data-field' => 'cost_to_stay', 'data-sorter' => 'priceSorter'} Cost to Stay
+        %th{'data-sortable' => 'true', 'data-field' => 'total_cost'} Total Cost
+        %th{'data-sortable' => 'true', 'data-field' => 'days'} Days
+        %th Edit
+        %th Destroy
+
+    %tbody
+      - @not_rated.each do |trip|
+        %tr
+          %td
+            %span.badge{class: trip.badge_color(trip.rating)}= trip.rating
+          %td{'data-sortable' => 'true', 'data-field' => 'name', 'data-sorter' => 'htmlSorter'}= link_to trip.name, trip
+          %td
+            %span.badge{class: trip.badge_color(trip.matt_rating)}= trip.matt_rating
+          %td
+            %span.badge{class: trip.badge_color(trip.heather_rating)}= trip.heather_rating
+          %td= "$#{trip.cost_to_stay}"
+          %td= "$#{trip.total_cost}"
+          %td= trip.length
+          %td= link_to 'Edit', edit_trip_path(trip), class: 'btn btn-primary float-right'
+          %td= link_to 'Destroy', trip, method: :delete, data: { :confirm => 'Are you sure?' }, class: 'btn btn-danger float-right'
+
+%h2 Overall Highest
+%table.table#trips{'data-toggle' => 'table', 'data-search' =>'true'}
+  %thead
+    %tr
+      %th{'data-sortable' => 'true', 'data-field' => 'rating', 'data-sorter' => 'htmlSorter'} Rating
+      %th{'data-sortable' => 'true', 'data-field' => 'name', 'data-sorter' => 'htmlSorter'} Name
+      %th{'data-sortable' => 'true', 'data-field' => 'matt_rating', 'data-sorter' => 'htmlSorter'} Matt's Rating
+      %th{'data-sortable' => 'true', 'data-field' => 'heather_rating', 'data-sorter' => 'htmlSorter'} Heather's Rating
+      %th{'data-sortable' => 'true', 'data-field' => 'cost_to_stay', 'data-sorter' => 'priceSorter'} Cost to Stay
+      %th{'data-sortable' => 'true', 'data-field' => 'total_cost'} Total Cost
+      %th{'data-sortable' => 'true', 'data-field' => 'days'} Days
+
+  %tbody
+    - @top_trips.each do |trip|
+      %tr
+        %td
+          %span.badge{class: trip.badge_color(trip.rating)}= trip.rating
+        %td{'data-sortable' => 'true', 'data-field' => 'name', 'data-sorter' => 'htmlSorter'}= link_to trip.name, trip
+        %td
+          %span.badge{class: trip.badge_color(trip.matt_rating)}= trip.matt_rating
+        %td
+          %span.badge{class: trip.badge_color(trip.heather_rating)}= trip.heather_rating
+        %td= "$#{trip.cost_to_stay}"
+        %td= "$#{trip.total_cost}"
+        %td= trip.length
+%br
+%h2 Matt's Highest
+%table.table#trips{'data-toggle' => 'table', 'data-search' =>'true'}
+  %thead
+    %tr
+      %th{'data-sortable' => 'true', 'data-field' => 'matt_rating', 'data-sorter' => 'htmlSorter'} Matt's Rating
+      %th{'data-sortable' => 'true', 'data-field' => 'name', 'data-sorter' => 'htmlSorter'} Name
+      %th{'data-sortable' => 'true', 'data-field' => 'heather_rating', 'data-sorter' => 'htmlSorter'} Heather's Rating
+      %th{'data-sortable' => 'true', 'data-field' => 'cost_to_stay', 'data-sorter' => 'priceSorter'} Cost to Stay
+      %th{'data-sortable' => 'true', 'data-field' => 'total_cost'} Total Cost
+      %th{'data-sortable' => 'true', 'data-field' => 'days'} Days
+
+  %tbody
+    - @matt_trips.each do |trip|
+      %tr
+        %td
+          %span.badge{class: trip.badge_color(trip.matt_rating)}= trip.matt_rating
+        %td{'data-sortable' => 'true', 'data-field' => 'name', 'data-sorter' => 'htmlSorter'}= link_to trip.name, trip
+        %td
+          %span.badge{class: trip.badge_color(trip.heather_rating)}= trip.heather_rating
+        %td= "$#{trip.cost_to_stay}"
+        %td= "$#{trip.total_cost}"
+        %td= trip.length
+%br
+%h2 Heather's Highest
+%table.table#trips{'data-toggle' => 'table', 'data-search' =>'true'}
+  %thead
+    %tr
+      %th{'data-sortable' => 'true', 'data-field' => 'heather_rating', 'data-sorter' => 'htmlSorter'} Heather's Rating
+      %th{'data-sortable' => 'true', 'data-field' => 'name', 'data-sorter' => 'htmlSorter'} Name
+      %th{'data-sortable' => 'true', 'data-field' => 'matt_rating', 'data-sorter' => 'htmlSorter'} Matt's Rating
+      %th{'data-sortable' => 'true', 'data-field' => 'cost_to_stay', 'data-sorter' => 'priceSorter'} Cost to Stay
+      %th{'data-sortable' => 'true', 'data-field' => 'total_cost'} Total Cost
+      %th{'data-sortable' => 'true', 'data-field' => 'days'} Days
+
+  %tbody
+    - @heather_trips.each do |trip|
+      %tr
+        %td
+          %span.badge{class: trip.badge_color(trip.heather_rating)}= trip.heather_rating
+        %td{'data-sortable' => 'true', 'data-field' => 'name', 'data-sorter' => 'htmlSorter'}= link_to trip.name, trip
+        %td
+          %span.badge{class: trip.badge_color(trip.matt_rating)}= trip.matt_rating
+        %td= "$#{trip.cost_to_stay}"
+        %td= "$#{trip.total_cost}"
+        %td= trip.length

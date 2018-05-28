@@ -1,0 +1,41 @@
+!!!
+%html
+  %head
+    %title Boverilife
+    = csrf_meta_tags
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_include_tag 'https://www.gstatic.com/charts/loader.js'
+    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+    %link{href: '//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css', rel: 'stylesheet'}/
+    %script{src: '//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js'}
+    %script{src: '//rawgit.com/hhurz/tableExport.jquery.plugin/master/tableExport.js'}
+
+  %body
+    %nav.navbar.navbar-expand-md.navbar-dark.bg-dark.fixed-top
+      %a.navbar-brand{href: '#'} A Boveri Life
+      %button.navbar-toggler{'aria-controls' => 'navbarsExampleDefault', 'aria-expanded' => 'false', 'aria-label' => 'Toggle navigation', 'data-target' => '#navbarsExampleDefault', 'data-toggle' => 'collapse', type: 'button'}
+        %span.navbar-toggler-icon
+      #navbarsExampleDefault.collapse.navbar-collapse
+        %ul.navbar-nav.mr-auto
+          %li.nav-item
+            %a.nav-link{href: '/trips'} Trips
+          %li.nav-item
+            %a.nav-link{href: '/trips/ratings'} By Rating
+          %li.nav-item
+            %a.nav-link{href: '/trips/lifetime'} Lifetime
+          %li.nav-item
+            %a.nav-link{href: '/trips/categories'} Categories
+          %li.nav-item
+            %a.nav-link{href: '/trips/retirement'} Retirement
+          %li.nav-item
+            %a.nav-link{href: '/trips/kids'} Kids
+          %li.nav-item
+            %a.nav-link{href: '/trips/ignored'} Ignored
+    .row
+      .container.col-11
+        %br
+        %br
+        %br
+    .row
+      .container.col-11
+        = yield
