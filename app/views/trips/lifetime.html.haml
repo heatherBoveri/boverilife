@@ -4,6 +4,9 @@
               chart_data('Hours', @hours),
               chart_data('Flights', @flights)]
 
+= column_chart @trips_by_cost, stacked: true, legend: false, prefix: '$', thousands: ','
+= column_chart @trips_by_length, stacked: true, legend: false
+
 %br
 %h1
   Lifetime Trips
@@ -49,6 +52,8 @@
                   - trip.icons.each do |tag, icon|
                     %span{'data-toggle' => 'tooltip', title: tag, href: '#'}
                       = icon(icon)
+                  %span.badge.badge-secondary
+                    = currency(trip.total_cost)
             %td.col-md-1{'data-sortable' => 'true', 'data-field' => 'vacation_days'}= vacation_days
             %td.col-md-2{'data-sortable' => 'true', 'data-field' => 'total_cost'}= currency(cost)
             %td.col-md-2

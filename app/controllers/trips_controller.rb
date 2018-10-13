@@ -30,6 +30,17 @@ class TripsController < ApplicationController
     sorted_trips.each { |k, v| @ratings[k] = v.map(&:rating).select { |r| r.is_a? Integer }.reduce(0, :+) }
     sorted_trips.each { |k, v| @flights[k] = v.map(&:total_flight_cost).reduce(0, :+) }
     sorted_trips.each { |k, v| @hours[k] = v.map(&:flight_hours).select { |r| r.is_a? Integer }.reduce(0, :+) }
+
+    @trips_by_cost = [{data: []}, {data: []}, {data: []}, {data: []}, {data: []}]
+    @trips_by_length = [{data: []}, {data: []}, {data: []}, {data: []}, {data: []}]
+    sorted_trips.each do |k, v|
+      v.count.times { |i|
+        @trips_by_cost[i][:name] = "#{(i + 1).ordinalize} trip" if v[i]
+        @trips_by_cost[i][:data] << [k, v[i].total_cost] if v[i]
+        @trips_by_length[i][:name] = "#{(i + 1).ordinalize} trip" if v[i]
+        @trips_by_length[i][:data] << [k, v[i].vacation_days] if v[i]
+      }
+    end
   end
 
   def categories

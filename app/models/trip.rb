@@ -75,6 +75,7 @@ class Trip < ApplicationRecord
   end
 
   def vacation_days
+    return 0 if length > 34
     case length
     when 3 then 1
     when 4, 5 then 2
@@ -82,7 +83,7 @@ class Trip < ApplicationRecord
     when 16 then 10
     when 23 then 15
     when 2 then 0
-    else 0
+    else length
     end
   end
 
